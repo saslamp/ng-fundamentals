@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, Inject } from "@angular/core";
 import { EventService } from './shared/event.service';
 
 @Component({
@@ -19,7 +19,8 @@ import { EventService } from './shared/event.service';
 export class EventsListComponent {
   events: any[]
   
-  constructor(private eventService: EventService) {
+  constructor(@Inject(EventService) private eventService: EventService) {
     this.events = this.eventService.getEvents()
   }
+
 }
