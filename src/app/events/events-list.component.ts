@@ -1,5 +1,8 @@
 import { Component, Inject } from "@angular/core";
 import { EventService } from './shared/event.service';
+import { ToastrService } from '../common/toastr.service';
+
+// declare let toastr
 
 @Component({
     selector: 'events-list',
@@ -9,7 +12,7 @@ import { EventService } from './shared/event.service';
         <hr />
         <div class="row">
             <div class="col-md-5" *ngFor="let event of events">
-                <event-thumbnail [event]="event"></event-thumbnail>
+                <event-thumbnail (click)="handleThumbnailClick(event.name)" [event]="event"></event-thumbnail>
             </div>
         </div>
     </div>
@@ -19,8 +22,15 @@ import { EventService } from './shared/event.service';
 export class EventsListComponent {
   events: any[]
   
-  constructor(@Inject(EventService) private eventService: EventService) {
+  constructor(@Inject(EventService) private eventService: EventService, private toastr: ToastrService) {
+  
+  }
+  
+  ngOnInit() {
     this.events = this.eventService.getEvents()
   }
 
+  handleThumbnailClick(eventName: any) {
+    this.toastr.success(eventName)
+  }
 }
